@@ -3,8 +3,10 @@ package main
 import (
 	"crypto/tls"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net"
+	"net/http"
 	"os"
 	"strings"
 	"time"
@@ -42,6 +44,14 @@ func main() {
 	if dbName == "" {
 		log.Fatal("DB_NAME environment variable must be set")
 	}
+
+	resp, err := http.Get("https://jsonplaceholder.typicode.com/comments?id=1")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	log.Printf(string(body))
 
 	var dbURI string
 	dbURI = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", dbUser, dbPwd, dbTCPHost, dbPort, dbName)
