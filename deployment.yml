@@ -25,7 +25,6 @@ spec:
         image: gcr.io/cloudsql-docker/gce-proxy:1.17
         command:
           - "/cloud_sql_proxy"
-
           # If connecting from a VPC-native GKE cluster, you can use the
           # following flag to have the proxy connect over private IP
          # - "-ip_address_types=PRIVATE"
