@@ -36,3 +36,56 @@ spec:
           # The default Cloud SQL proxy image runs as the
           # "nonroot" user and group (uid: 65532) by default.
           runAsNonRoot: true
+      - name: gke-db-test
+        image: gcr.io/PROJECT_ID/IMAGE:TAG
+        ports:
+        - containerPort: 7331
+          protocol: TCP
+        volumeMounts:
+          - name: tls
+            mountPath: /etc/tls
+            readOnly: true
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 5777
+        env:
+          - name: TCP_SERVER_PORT
+            value: "7331"
+          - name: TLS_CERT
+            value: /etc/tls/tls.crt
+          - name: TLS_KEY
+            value: /etc/tls/tls.key
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: db
+                key: username
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: db
+                key: password
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: db
+                key: database
+          - name: DB_PORT
+            valueFrom:
+              secretKeyRef:
+                name: db
+                key: port
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: db
+                key: host
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            cpu: 100m
+      volumes:
+        - name: tls
+          secret:
+            secretName: yourdomain-tls

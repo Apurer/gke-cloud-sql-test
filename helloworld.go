@@ -71,10 +71,6 @@ func main() {
 		log.Printf(herro)
 	}
 
-	http2ProxyPort := os.Getenv("HTTP2_SERVER_PORT")
-	if http2ProxyPort == "" {
-		log.Fatal("HTTP2_SERVER_PORT environment variable must be set")
-	}
 	tcpServerPort := os.Getenv("TCP_SERVER_PORT")
 	if tcpServerPort == "" {
 		log.Fatal("TCP_SERVER_PORT environment variable must be set")
