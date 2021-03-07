@@ -23,7 +23,7 @@ env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: apurer-autopilot    # TODO: update to cluster name
   GKE_REGION: europe-west1   # TODO: update to cluster zone
-  DEPLOYMENT_NAME: gke-test # TODO: update to deployment name
+  DEPLOYMENT_NAME: gke-db-test # TODO: update to deployment name
   NAMESPACE_NAME: gke-test-namespace
 
 jobs:
